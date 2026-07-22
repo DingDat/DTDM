@@ -1,0 +1,22 @@
+name: app
+
+type: 'php:8.2'
+
+mounts:
+  'web/uploads':
+    source: local
+    source_path: uploads
+
+disk: 2048
+
+hooks:
+  build: |
+    set -e
+  deploy: |
+    set -e
+
+web:
+  locations:
+    '/':
+      root: "web"
+      passthru: "/index.php"
