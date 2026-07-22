@@ -1,0 +1,31 @@
+applications:
+  app:
+    type: 'php:8.2'
+
+    mounts:
+      'web/uploads':
+        source: local
+        source_path: uploads
+
+    disk: 2048
+
+    hooks:
+      build: |
+        set -e
+      deploy: |
+        set -e
+
+    web:
+      locations:
+        '/':
+          root: "web"
+          passthru: "/index.php"
+
+routes:
+  "https://www.{default}/":
+    type: upstream
+    upstream: "app:http"
+
+  "https://{default}/":
+    type: redirect
+    to: "https://www.{default}/"
