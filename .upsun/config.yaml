@@ -1,6 +1,11 @@
 applications:
   app:
     type: 'php:8.2'
+    dependencies:
+      php:
+        composer/composer: '^2'
+    relationships:
+      database: "db:mysql"
     hooks:
       build: |
         set -e
@@ -11,6 +16,10 @@ applications:
         '/':
           root: "web"
           passthru: "/index.php"
+
+services:
+  db:
+    type: mariadb:11.0
 
 routes:
   "https://www.{default}/":
